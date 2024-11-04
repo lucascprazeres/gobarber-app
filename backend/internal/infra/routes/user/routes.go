@@ -2,8 +2,10 @@ package userRoutes
 
 import (
 	"github.com/gin-gonic/gin"
+	"gobarber/internal/domain/validation"
 	"gobarber/internal/schema"
 	"gobarber/internal/service"
+	"gobarber/pkg/errorwrapper"
 	"net/http"
 )
 
@@ -22,14 +24,15 @@ func Register(router *gin.RouterGroup) {
 func (r *Router) createUser(c *gin.Context) {
 	var input schema.CreateUserInput
 	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		errorwrapper.SendError(c, validation.CustomValidationError(err))
 		return
 	}
 
 	ctx := c.Request.Context()
 	result, err := r.service.CreateUser(ctx, &input)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		errorwrapper.SendError(c, err)
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"data": result})
