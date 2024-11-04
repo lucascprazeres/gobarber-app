@@ -3,7 +3,7 @@ package http
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"gobarber/internal/infra/routes"
+	"gobarber/internal/infra/http/routes"
 	"gobarber/internal/settings"
 	"net/http"
 )

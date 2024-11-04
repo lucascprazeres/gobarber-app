@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	userRoutes "gobarber/internal/infra/routes/user"
+	"gobarber/internal/infra/http/routes/user"
 )
 
 func Register(app *gin.Engine) {
